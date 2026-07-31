@@ -8,7 +8,7 @@
 
 페이지가 로드되면 왼쪽에 번호가 매겨진 마커가 있는 인터랙티브 지도와, 오른쪽에 스크롤 가능한 업체 목록 패널이 표시됩니다. 각 업체 카드에는 업체명, 주소, 구글 평점이 표시됩니다.
 
-![번호가 매겨진 마커가 있는 지도와 업체 목록 패널이 표시된 메인 화면](C:\Users\sooye\LinuxWorkSpace\webProjects\zona-rosa\images\main_view_1785456176016.png)
+![번호가 매겨진 마커가 있는 지도와 업체 목록 패널이 표시된 메인 화면](./images/main_view_1785456176016.png)
 
 ---
 
@@ -25,9 +25,9 @@
 | 기타 | 기타 한인 업체 |
 
 ````carousel
-![음식점 필터 — 청록색 테두리 마커, 음식점만 목록에 표시](C:\Users\sooye\LinuxWorkSpace\webProjects\zona-rosa\images\restaurants_filtered_1785456212747.png)
+![음식점 필터 — 청록색 테두리 마커, 음식점만 목록에 표시](./images/restaurants_filtered_1785456212747.png)
 <!-- slide -->
-![식품점 필터 — 파란색 테두리 마커, 식품점만 목록에 표시](C:\Users\sooye\LinuxWorkSpace\webProjects\zona-rosa\images\grocery_filtered_1785456232934.png)
+![식품점 필터 — 파란색 테두리 마커, 식품점만 목록에 표시](./images/grocery_filtered_1785456232934.png)
 ````
 
 ---
@@ -38,7 +38,7 @@
 
 **지원되는 음식 키워드 예시:** `chicken`, `치킨`, `bbq`, `삼겹살`, `kimchi`, `김치찌개`, `jjajangmyeon`, `짜장면`, `coffee`, `커피` 등
 
-![chicken 검색 결과 — 일치하는 4개 업체가 표시됨](C:\Users\sooye\LinuxWorkSpace\webProjects\zona-rosa\images\search_results_chicken_1785456320223.png)
+![chicken 검색 결과 — 일치하는 4개 업체가 표시됨](./images/search_results_chicken_1785456320223.png)
 
 ---
 
@@ -50,7 +50,7 @@
 - **지도 위에 사진 갤러리 팝업**이 표시되며, 좌우 화살표(‹ ›)로 사진 탐색 가능
 - **상세 패널**에 업종, 평점, 연락처, 주소, 구글 지도 바로가기 링크가 표시
 
-![YG Consulting 상세 — 지도 위 사진 팝업 + 연락처가 포함된 상세 패널](C:\Users\sooye\LinuxWorkSpace\webProjects\zona-rosa\images\yg_consulting_details_1785456401212.png)
+![YG Consulting 상세 — 지도 위 사진 팝업 + 연락처가 포함된 상세 패널](./images/yg_consulting_details_1785456401212.png)
 
 > [!TIP]
 > 상세 패널의 **✕** 버튼을 클릭하면 패널이 닫히고 전체 지도 화면으로 돌아갑니다.

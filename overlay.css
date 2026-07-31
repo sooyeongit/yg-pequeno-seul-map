@@ -1,0 +1,367 @@
+aside#panelNegocios.panel-negocios {
+    display: none;
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background: transparent !important;
+    box-sizing: border-box;
+    padding: 0;
+    margin-top: 10px;
+    font-family: inherit;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    border-radius: 10px;
+    height: 100%;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+aside#panelNegocios.panel-negocios::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
+}
+
+aside#panelNegocios.panel-negocios.visible {
+    display: flex;
+    flex-direction: column;
+    opacity: 1;
+    background: transparent !important;
+    border-radius: 10px;
+}
+
+/* En escritorios/laptops (> 800px): El detalle reemplaza SOLO a la listaNegocios */
+.panel-filtros.detalle-abierto .lista-negocios {
+    display: none !important;
+}
+
+/* Scroll invisible cuando el detalle está abierto para que '구글 지도에서 보기' siempre se pueda alcanzar */
+.panel-filtros.detalle-abierto {
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+}
+
+.panel-filtros.detalle-abierto::-webkit-scrollbar {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+}
+
+/* En móviles (<= 645px): Ocultamos el header, buscador y categorías para maximizar espacio */
+@media (max-width: 645px) {
+    aside#panelNegocios.panel-negocios {
+        margin-top: 0;
+    }
+
+    .panel-filtros.detalle-abierto .header-container,
+    .panel-filtros.detalle-abierto .buscador-container,
+    .panel-filtros.detalle-abierto .lista-filtros {
+        display: none !important;
+    }
+}
+
+.panel-negocios .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    border: none !important;
+    background: rgba(255, 255, 255, 0.25) !important;
+    color: currentColor !important;
+    cursor: pointer;
+    width: 30px !important;
+    height: 30px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: none !important;
+    transition: background-color 0.2s ease, color 0.2s ease;
+    margin: 0;
+    padding: 0;
+    border-radius: 50% !important;
+    outline: none;
+    z-index: 5;
+}
+
+.panel-negocios .close-btn:hover {
+    background: rgba(255, 255, 255, 0.45) !important;
+}
+
+#detalleNegocio.detalle-negocio {
+    margin: 0 5px 15px 5px;
+    padding: 0;
+    border-radius: 20px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+}
+
+#detalleNegocio.detalle-yg {
+    background-color: var(--color-yg) !important;
+}
+
+#detalleNegocio.detalle-restaurante {
+    background-color: var(--color-restaurante) !important;
+}
+
+#detalleNegocio.detalle-tienda {
+    background-color: var(--color-tienda) !important;
+}
+
+#detalleNegocio.detalle-otros {
+    background-color: var(--color-otros) !important;
+}
+
+/* FRANJA SUPERIOR DE COLOR EN DETALLE */
+.detalle-header-banner {
+    padding: 18px 48px 24px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: #ffffff;
+    position: relative;
+    z-index: 1;
+    flex-shrink: 0;
+}
+
+#detalleNegocio.detalle-yg .detalle-header-banner {
+    background-color: var(--color-yg);
+    color: #1a1a1a;
+}
+
+#detalleNegocio.detalle-restaurante .detalle-header-banner {
+    background-color: var(--color-restaurante);
+    color: #ffffff;
+}
+
+#detalleNegocio.detalle-tienda .detalle-header-banner {
+    background-color: var(--color-tienda);
+    color: #ffffff;
+}
+
+#detalleNegocio.detalle-otros .detalle-header-banner {
+    background-color: var(--color-otros);
+    color: #ffffff;
+}
+
+.detalle-nombre {
+    font-weight: 700;
+    font-size: 1.05rem;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+}
+
+/* CUERPO BLANCO DEL DETALLE CON SCROLL INVISIBLE */
+.detalle-body {
+    margin-top: -12px;
+    position: relative;
+    z-index: 2;
+    padding: 28px 20px 20px 20px;
+    background: #ffffff;
+    border-radius: 20px 20px 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    font-size: 0.9rem;
+    color: #333333;
+
+    border: 0px 1px 1px solid #ae1111;
+    flex: 1;
+    overflow-y: auto;
+    min-height: 0;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.detalle-body::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
+}
+
+.detalle-body p {
+    margin: 0;
+    line-height: 1.45;
+}
+
+.gmaps-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #ffffff;
+    color: #333333;
+    border: 1px solid rgba(12, 124, 82, 0.2);
+    border-radius: 20px;
+    padding: 8px 16px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    text-decoration: none;
+    margin-top: 16px;
+    transition: all 0.2s ease;
+    box-shadow: rgba(12, 124, 82, 0.2) 0px 3px 0px 0px;
+    font-family: 'Poppins', 'Noto Sans KR', sans-serif;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.gmaps-btn:hover {
+    border-color: rgba(12, 124, 82, 0.2);
+    box-shadow: none;
+    transform: translateY(2.5px);
+}
+
+/* ==========================================
+   BURBUJA DE FOTOS (Leaflet Popup) SOBRE EL MARCADOR SELECCIONADO
+   El "pico" que apunta a la coordenada real lo da Leaflet de fábrica
+   (.leaflet-popup-tip); solo lo re-estilizamos para que combine.
+   ========================================== */
+.leaflet-popup.popup-fotos .leaflet-popup-content-wrapper {
+    padding: 8px;
+    border-radius: 18px;
+    border: none !important;
+    background: #ffffff !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.22);
+    overflow: hidden;
+}
+
+.leaflet-popup.popup-fotos .leaflet-popup-content {
+    margin: 0;
+    width: auto !important;
+    line-height: 0;
+}
+
+.leaflet-popup.popup-fotos .leaflet-popup-tip {
+    background: #ffffff !important;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.18);
+    border-radius: 5px;
+    border: none !important;
+}
+
+.popup-fotos-carrusel {
+    position: relative;
+    width: min(310px, 78vw);
+    height: min(215px, 54vw);
+    background: rgb(206, 219, 223);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-radius: 12px;
+}
+
+.popup-fotos-carrusel.sin-fotos {
+    font-family: 'Poppins', 'Noto Sans KR', sans-serif;
+    font-size: 0.85rem;
+    color: rgb(255, 255, 255);
+    font-weight: 500;
+}
+
+.popup-foto-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    border-radius: 12px;
+}
+
+.popup-flecha {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255, 255, 255, 0.85);
+    color: #333333;
+    font-size: 18px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.2s ease;
+    z-index: 2;
+    padding: 0;
+}
+
+.popup-flecha:hover {
+    background: #ffffff;
+}
+
+.popup-flecha-prev {
+    left: 6px;
+}
+
+.popup-flecha-next {
+    right: 6px;
+}
+
+.popup-dots {
+    position: absolute;
+    bottom: 8px;
+    left: 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    z-index: 2;
+    background: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    box-sizing: border-box;
+    pointer-events: none;
+}
+
+.popup-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.65);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.45);
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    pointer-events: auto;
+}
+
+.popup-dot:hover {
+    background: rgba(255, 255, 255, 0.95);
+    transform: scale(1.2);
+}
+
+.popup-dot.activo {
+    background: #ffffff;
+    transform: scale(1.35);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.6);
+}
+
+/* Touch targets y tamaño de popup para móviles */
+@media (max-width: 645px) {
+    .popup-fotos-carrusel {
+        width: min(240px, 68vw);
+        height: min(160px, 45vw);
+    }
+
+    .popup-flecha {
+        width: 30px;
+        height: 30px;
+        font-size: 18px;
+    }
+
+    .popup-dot {
+        width: 8px;
+        height: 8px;
+    }
+
+    .panel-negocios .close-btn {
+        width: 36px !important;
+        height: 36px !important;
+    }
+}

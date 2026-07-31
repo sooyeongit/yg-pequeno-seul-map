@@ -1,0 +1,716 @@
+@font-face {
+    font-family: 'memomentkkukkuk';
+    src: url('fonts/memomentKkukkkuk-OTF/memomentKkukkkuk.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+:root {
+    --rgb-yg: 252, 209, 22;
+    --rgb-restaurante: 0, 194, 178;
+    --rgb-tienda: 59, 82, 246;
+    --rgb-otros: 230, 103, 49;
+
+    --color-yg: rgb(var(--rgb-yg));
+    --color-restaurante: rgb(var(--rgb-restaurante));
+    --color-tienda: rgb(var(--rgb-tienda));
+    --color-otros: rgb(var(--rgb-otros));
+}
+
+html,
+body {
+    height: 100vh;
+    height: 100dvh;
+    margin: 0;
+    overflow: hidden;
+    /* Evita barras de desplazamiento en la ventana principal */
+    font-family: 'Poppins', 'Noto Sans KR', sans-serif;
+}
+
+/* El contenedor que divide la pantalla */
+#app-container {
+    display: flex;
+    height: 100vh;
+    height: 100dvh;
+    width: 100vw;
+    position: relative;
+}
+
+/* El espacio del mapa */
+#mapa {
+    flex: 1;
+    height: 100%;
+}
+
+/* ESTE ES EL NUEVO PANEL FIJO (ÍNDICE) */
+.panel-filtros {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    bottom: 20px;
+    width: 25%;
+    max-width: 420px;
+    max-height: calc(100dvh - 40px);
+    box-sizing: border-box;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 16px;
+    font-family: inherit;
+    z-index: 1000;
+    scrollbar-width: none;
+}
+
+.panel-filtros h2 {
+    margin: 0 0 16px 0;
+    font-size: 1.2rem;
+    color: #333;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 8px;
+}
+
+/* Estilos de la lista interactiva */
+.lista-filtros {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    list-style: none;
+    padding: 0;
+    margin: 0 0 20px 0;
+}
+
+.lista-filtros li {
+    font-family: 'Poppins', 'Noto Sans KR', sans-serif;
+    padding: 8px 10px;
+    /* más pequeño */
+    cursor: pointer;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 0.86rem;
+    /* más pequeño */
+    transition: all 0.2s ease-in-out;
+    border-left: none;
+    background: rgb(224, 236, 240);
+    color: #000000;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    box-shadow: rgba(11, 113, 76, 0.2) 0px 3px 0px 0px;
+}
+
+.lista-filtros li:hover {
+    filter: brightness(0.95);
+    transform: translateY(2px);
+    /* Pequeña animación hacia arriba */
+}
+
+/* Sombras y estilo de resalte para el botón activo/seleccionado */
+.lista-filtros li.activo {
+    box-shadow: none;
+    transform: translateY(1.5px);
+    filter: brightness(1.02);
+}
+
+
+
+.filtro-todos.activo {
+    border-color: rgb(224, 236, 240);
+}
+
+/* Colores específicos para cada categoría (se aplican cuando están activos) */
+.filtro-todos {
+    color: #000000;
+    grid-column: span 2;
+}
+
+.filtro-todos.activo {
+    background: #ffffff;
+}
+
+.filtro-yg.activo {
+    color: #000000;
+    background: var(--color-yg);
+}
+
+.filtro-restaurante.activo {
+    color: #ffffff;
+    background: var(--color-restaurante);
+}
+
+.filtro-tienda.activo {
+    color: #ffffff;
+    background: var(--color-tienda);
+}
+
+.filtro-otros.activo {
+    color: #ffffff;
+    background: var(--color-otros);
+}
+
+/* Iconos para filtros */
+.lista-filtros li::before {
+    content: "";
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    margin-right: 8px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    flex-shrink: 0;
+}
+
+.filtro-todos::before {
+    background-image: url('icons/all.png');
+}
+
+.filtro-yg::before {
+    background-image: url('icons/sparkle.png');
+}
+
+.filtro-restaurante::before {
+    background-image: url('icons/cutlery.png');
+}
+
+.filtro-restaurante.activo::before {
+    background-image: url('icons/cutlery-white.png');
+}
+
+.filtro-tienda::before {
+    background-image: url('icons/shopping.png');
+}
+
+.filtro-tienda.activo::before {
+    background-image: url('icons/shopping-white.png');
+}
+
+.filtro-otros::before {
+    background-image: url('icons/more.png');
+}
+
+.filtro-otros.activo::before {
+    background-image: url('icons/more-white.png');
+}
+
+.lista-negocios {
+    flex: none;
+    overflow-y: visible;
+    padding-right: 0;
+    margin-top: 10px;
+}
+
+.lista-negocios::-webkit-scrollbar {
+    width: 6px;
+}
+
+.lista-negocios::-webkit-scrollbar-button {
+    display: none;
+    /* Sin flechas de dirección */
+}
+
+.lista-negocios::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.lista-negocios::-webkit-scrollbar-thumb {
+    background: rgb(224, 236, 240);
+    border-radius: 10px;
+}
+
+.lista-negocios::-webkit-scrollbar-thumb:hover {
+    background: #b2ccd6;
+}
+
+.titulo-lista-negocios {
+    margin: 20px 0 12px 0;
+    font-size: 1.1rem;
+    color: #444;
+    border-bottom: 1px dashed #ddd;
+    padding-bottom: 6px;
+}
+
+.lista-negocios-items {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.negocio-item {
+    padding: 12px;
+    border-radius: 8px;
+    background: #ffffff;
+    border: 1px solid rgba(12, 124, 82, 0.2);
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    border-left: 5px solid transparent;
+
+}
+
+.negocio-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+}
+
+.negocio-item.negocio-todos {
+    border-left-color: #777;
+}
+
+.negocio-item.negocio-yg {
+    border-left-color: var(--color-yg);
+}
+
+.negocio-item.negocio-restaurante {
+    border-left-color: var(--color-restaurante);
+}
+
+.negocio-item.negocio-tienda {
+    border-left-color: var(--color-tienda);
+}
+
+.negocio-item.negocio-otros {
+    border-left-color: var(--color-otros);
+}
+
+.negocio-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 4px;
+}
+
+.negocio-nombre {
+    font-weight: bold;
+    font-size: 0.95rem;
+    color: #333;
+}
+
+.negocio-calificacion {
+    font-size: 0.8rem;
+    font-weight: bold;
+    color: #000000;
+    background: #ffffff;
+    padding: 1px 5px;
+    border-radius: 5px;
+
+    border: 1px solid rgba(12, 124, 82, 0.2);
+    box-shadow: rgba(12, 124, 82, 0.2) 0px 2px 0px 0px;
+}
+
+.negocio-direccion {
+    font-size: 0.78rem;
+    color: #666;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Responsividad para móviles (El panel fijo se va abajo) */
+@media (max-width: 800px) {
+    #app-container {
+        display: block;
+    }
+
+    #mapa {
+        height: 100vh;
+        width: 100vw;
+    }
+
+    .panel-filtros {
+        position: absolute;
+        top: auto;
+        bottom: 20px;
+        left: 20px;
+        right: 20px;
+        width: calc(100% - 40px);
+        max-width: none;
+        height: 40vh;
+        max-height: 40vh;
+    }
+}
+
+/* ==========================================
+/* MARCADOR NUMERADO
+/* La foto del negocio ya no vive en el pin — se muestra en una burbuja
+/* (Leaflet Popup) al seleccionar, ver estilos "popup-fotos" en overlay.css
+/* ========================================== */
+.marcador-numero-contenedor {
+    background: transparent !important;
+    border: none !important;
+}
+
+/* ==========================================
+/* ESTILOS DEL CÍRCULO NUMERADO (compartido dentro del icono combinado)
+/* ========================================== */
+.marcador-numero-circulo {
+    background-color: #000000;
+    color: #ffffff;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 11px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    border: none !important;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+}
+
+/* Círculo activo: se escala con sombra prominente */
+.marcador-numero-circulo.activo {
+    background-color: #000000;
+    transform: scale(1.25);
+    box-shadow: 0 0 0 3px #000000, 0 4px 10px rgba(0, 0, 0, 0.4) !important;
+    /* font-weight: 600; */
+    border: none !important;
+}
+
+/* Bordes activos de acuerdo a su categoría */
+.marcador-numero-circulo.activo.activo-yg {
+    box-shadow: 0 0 0 3px var(--color-yg), 0 4px 10px rgba(0, 0, 0, 0.4) !important;
+}
+
+.marcador-numero-circulo.activo.activo-restaurante {
+    box-shadow: 0 0 0 3px var(--color-restaurante), 0 4px 10px rgba(0, 0, 0, 0.4) !important;
+}
+
+.marcador-numero-circulo.activo.activo-tienda {
+    box-shadow: 0 0 0 3px var(--color-tienda), 0 4px 10px rgba(0, 0, 0, 0.4) !important;
+}
+
+.marcador-numero-circulo.activo.activo-otros {
+    box-shadow: 0 0 0 3px var(--color-otros), 0 4px 10px rgba(0, 0, 0, 0.4) !important;
+}
+
+
+/* ==========================================
+/* BORDES DE CATEGORÍA PARA LOS CÍRCULOS (ZOOM BAJO)
+/* ========================================== */
+.marcador-numero-circulo.con-borde-yg {
+    box-shadow: 0 0 0 3px var(--color-yg), 0 2px 5px rgba(0, 0, 0, 0.3) !important;
+}
+
+.marcador-numero-circulo.con-borde-restaurante {
+    box-shadow: 0 0 0 3px var(--color-restaurante), 0 2px 5px rgba(0, 0, 0, 0.3) !important;
+}
+
+.marcador-numero-circulo.con-borde-tienda {
+    box-shadow: 0 0 0 3px var(--color-tienda), 0 2px 5px rgba(0, 0, 0, 0.3) !important;
+}
+
+.marcador-numero-circulo.con-borde-otros {
+    box-shadow: 0 0 0 3px var(--color-otros), 0 2px 5px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* ==========================================
+/* ESTILOS PARA EL TÍTULO DEL SITIO (BILINGÜE)
+/* ========================================== */
+.header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    /* Elementos separados en cada esquina */
+    margin-bottom: 0px;
+    padding-bottom: 10px;
+}
+
+.logo-yg {
+    height: 38px;
+    width: auto;
+    object-fit: contain;
+}
+
+.titulo-sitio {
+    display: flex;
+    align-items: center;
+    width: fit-content;
+    /* wrap al texto */
+}
+
+.logo-seoul {
+    height: 38px;
+    width: auto;
+    object-fit: contain;
+    padding-right: 8px;
+}
+
+.titulo-ko {
+    font-family: 'Poppins', 'memomentkkukkuk', sans-serif;
+    font-weight: 500;
+    font-size: clamp(1.6rem, 6vw, 3rem);
+    color: #000;
+    line-height: 1;
+}
+
+/* Estilos para el icono de info y tooltip */
+.info-tooltip-wrapper {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 8px;
+    vertical-align: bottom;
+    z-index: 1010;
+}
+
+.info-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background-color: rgb(224, 236, 240);
+    color: #555555;
+    font-size: 0.7rem;
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+    font-style: italic;
+    cursor: help;
+    transition: all 0.2s ease;
+    border: none;
+}
+
+.info-icon:hover {
+    background-color: #d0e0e5;
+    color: #111111;
+}
+
+.info-tooltip-text {
+    visibility: hidden;
+    opacity: 0;
+    width: 170px;
+    background-color: #222222;
+    color: #ffffff;
+    text-align: center;
+    border-radius: 8px;
+    padding: 8px 10px;
+    position: absolute;
+    z-index: 2000;
+    top: 130%;
+    right: 0;
+    left: auto;
+    transform: none;
+    transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.2s ease;
+    font-family: 'Poppins', 'Noto Sans KR', sans-serif;
+    font-size: 0.72rem;
+    line-height: 1.4;
+    font-weight: 400;
+    pointer-events: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.info-tooltip-text::after {
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    right: 4px;
+    left: auto;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent #222222 transparent;
+}
+
+.info-tooltip-wrapper:hover .info-tooltip-text {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* ==========================================
+/* ESTILOS PERSONALIZADOS PARA BOTONES DE ZOOM DE LEAFLET
+/* ========================================== */
+.leaflet-control-zoom.leaflet-bar.leaflet-control {
+    border: none !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+    /* Mismo sombreado que lista-filtros li.activo */
+    border-radius: 10px !important;
+    overflow: hidden;
+}
+
+.leaflet-control-zoom.leaflet-bar.leaflet-control a {
+    border: none !important;
+    border-bottom: none !important;
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    width: 38px !important;
+    height: 38px !important;
+    line-height: 38px !important;
+    font-family: 'Poppins', sans-serif !important;
+    font-weight: bold !important;
+    font-size: 18px !important;
+    transition: background-color 0.2s ease;
+}
+
+.leaflet-control-zoom.leaflet-bar.leaflet-control a:first-child {
+    border-top-left-radius: 10px !important;
+    border-top-right-radius: 10px !important;
+}
+
+.leaflet-control-zoom.leaflet-bar.leaflet-control a:last-child {
+    border-bottom-left-radius: 10px !important;
+    border-bottom-right-radius: 10px !important;
+    border-top: 1px solid #f0f0f0 !important;
+    /* Divisor interno ligero */
+}
+
+.leaflet-control-zoom.leaflet-bar.leaflet-control a:hover {
+    background-color: #f7f7f7 !important;
+}
+
+/* ==========================================
+/* ESTILOS PARA EL BUSCADOR DE NEGOCIOS
+/* ========================================== */
+.buscador-container {
+    margin-bottom: 16px;
+    width: 100%;
+    border-radius: 20px;
+}
+
+#buscadorNegocios {
+    width: 100%;
+    padding: 10px 14px;
+    border-radius: 20px;
+    border: 1px solid #eaeaea;
+    font-family: 'Poppins', 'Noto Sans KR', sans-serif;
+    font-size: 0.9rem;
+    box-sizing: border-box;
+    transition: all 0.2s ease-in-out;
+    background-color: #ffffff;
+}
+
+#buscadorNegocios:focus {
+    outline: none;
+    border-color: #999;
+    background-color: #ffffff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* ==========================================
+/* ESTILOS PARA EL TOOLTIP (HOVER) EN EL MAPA
+/* ========================================== */
+.tooltip-negocio {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    border: none !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+    /* Mismo sombreado que zoom control */
+    font-family: 'Poppins', 'Noto Sans KR', sans-serif !important;
+    font-weight: 600 !important;
+    font-size: 12px !important;
+    border-radius: 6px !important;
+    padding: 6px 10px !important;
+}
+
+.tooltip-negocio::before {
+    display: none !important;
+    /* Quita el triángulo */
+}
+
+
+/* ==========================================
+/* MARGEN PARA LOS CONTROLADORES DE LEAFLET
+/* ========================================== */
+.leaflet-top.leaflet-left {
+    margin-top: 20px !important;
+    margin-left: 20px !important;
+}
+
+/* Ocultar iconos y números/tooltips durante la animación de zoom del mapa */
+.leaflet-zoom-anim .leaflet-marker-icon,
+.leaflet-zoom-anim .marcador-numero-circulo,
+.leaflet-zoom-anim .tooltip-negocio {
+    opacity: 0 !important;
+    transition: opacity 0.1s ease;
+}
+
+/* ==========================================
+/* RESPONSIVE MEDIA QUERIES (TABLET & MOBILE)
+/* ========================================== */
+@media (max-width: 1024px) and (min-width: 801px) {
+    .panel-filtros {
+        width: 34%;
+        max-width: 360px;
+    }
+
+    .titulo-ko {
+        font-size: 2.2rem;
+    }
+}
+
+@media (max-width: 645px) {
+    #app-container {
+        display: block;
+    }
+
+    #mapa {
+        height: 100vh;
+        height: 100dvh;
+        width: 100vw;
+    }
+
+    .panel-filtros {
+        position: absolute;
+        top: auto;
+        bottom: 12px;
+        left: 12px;
+        right: 12px;
+        width: calc(100% - 24px);
+        max-width: none;
+        height: auto;
+        max-height: 38vh;
+        overflow-y: auto;
+        padding: 12px;
+    }
+
+    .panel-filtros.detalle-abierto {
+        max-height: 48vh;
+    }
+
+    .titulo-ko {
+        font-size: 1.8rem;
+    }
+
+    .logo-yg {
+        height: 30px;
+    }
+
+    .lista-filtros li {
+        padding: 10px 12px;
+        font-size: 0.8rem;
+    }
+
+    #buscadorNegocios {
+        padding: 12px 14px;
+    }
+
+    .marcador-numero-circulo {
+        width: 28px;
+        height: 28px;
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 900px) and (orientation: landscape) {
+    #app-container {
+        display: flex;
+    }
+
+    .panel-filtros {
+        width: 40%;
+        right: 12px;
+        left: auto;
+        top: 12px;
+        bottom: 12px;
+        height: auto;
+        max-height: none;
+    }
+}

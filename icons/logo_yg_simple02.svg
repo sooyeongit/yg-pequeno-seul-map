@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 160" width="100%" height="100%">
+  <style>
+    .fuente-serif {
+      font-family: 'Times New Roman', Times, 'Georgia', serif;
+    }
+    .texto-oscuro {
+      fill: #3a4b50; /* El tono gris/azul oscuro del original */
+    }
+    .siglas {
+      font-size: 76px;
+      letter-spacing: -2px;
+    }
+    .numero-uno {
+      fill: #b70a0a; /* El rojo característico del '1' */
+      font-size: 44px;
+      font-weight: bold;
+    }
+    .subtitulo {
+      font-size: 29px;
+      letter-spacing: 0.5px;
+    }
+  </style>
+
+  <!-- Contenedor del grupo principal para centrado -->
+  <g transform="translate(10, 10)">
+    <!-- Bloque Superior: YG 1 (El 1 sobre la sigla G en la esquina inferior derecha) -->
+    <text x="20" y="80" class="fuente-serif texto-oscuro siglas">YG</text>
+    <!-- Bloque rectangular blanco debajo de uno -->
+    <rect x="100" y="42" width="22" height="38" fill="#ffffff" />
+    <text xmlns="http://www.w3.org/2000/svg" x="106" y="78" class="fuente-serif numero-uno">1</text>
+    
+    <!-- Bloque Inferior: Consulting -->
+    <text x="12" y="122" class="fuente-serif texto-oscuro subtitulo">Consulting</text>
+  </g>
+</svg>

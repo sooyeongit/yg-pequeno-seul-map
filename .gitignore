@@ -1,0 +1,4 @@
+.vscode/
+.continue/
+request_negocios_inicial.py
+server.py

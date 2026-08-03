@@ -170,7 +170,6 @@ aside#panelNegocios.panel-negocios.visible {
     font-size: 0.9rem;
     color: #333333;
 
-    border: 0px 1px 1px solid #ae1111;
     flex: 1;
     overflow-y: auto;
     min-height: 0;
@@ -225,7 +224,7 @@ aside#panelNegocios.panel-negocios.visible {
     border-radius: 18px;
     border: none !important;
     background: #ffffff !important;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.22);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
     overflow: hidden;
 }
 
@@ -237,7 +236,6 @@ aside#panelNegocios.panel-negocios.visible {
 
 .leaflet-popup.popup-fotos .leaflet-popup-tip {
     background: #ffffff !important;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.18);
     border-radius: 5px;
     border: none !important;
 }
@@ -246,7 +244,8 @@ aside#panelNegocios.panel-negocios.visible {
     position: relative;
     width: min(310px, 78vw);
     height: min(215px, 54vw);
-    background: rgb(206, 219, 223);
+    background-image: linear-gradient(315deg, #cfd9f6 0%, #dbede4 100%);
+
     display: flex;
     align-items: center;
     justify-content: center;

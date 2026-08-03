@@ -11,6 +11,8 @@
 // Para solucionarlo, usamos la librería nativa de Places (PlacesService)
 // y llamamos a .getUrl(), el cual gestiona la autenticación transparente.
 
+import { t } from './i18n.js?v=49';
+
 export const GOOGLE_MAPS_BROWSER_KEY = 'AIzaSyAI_jIfxHUlHr8ujaFjP4YI6kBsO7g_HIA';
 
 let servicePlaces = null;
@@ -60,7 +62,7 @@ function construirHtmlCarrusel(negocio) {
     const tieneKey = Boolean(GOOGLE_MAPS_BROWSER_KEY);
 
     if (fotos.length === 0 || !tieneKey) {
-        return `<div class="popup-fotos-carrusel sin-fotos"><p>등록된 사진이 없습니다</p></div>`;
+        return `<div class="popup-fotos-carrusel sin-fotos"><p>${t('noPhotos')}</p></div>`;
     }
 
     if (typeof negocio._fotoIndice !== 'number') {
@@ -81,8 +83,8 @@ function construirHtmlCarrusel(negocio) {
         <div class="popup-fotos-carrusel">
             ${mostrarFlechas ? '<button type="button" class="popup-flecha popup-flecha-prev" aria-label="Foto anterior">&#8249;</button>' : ''}
             <img src="${srcImagen}" class="popup-foto-img" alt="${negocio.nombre}"
-                 onload="if(this.naturalWidth===100 && this.naturalHeight===100){ this.parentElement.className='popup-fotos-carrusel sin-fotos'; this.parentElement.innerHTML='<p>사진을 불러올 수 없습니다</p>'; }"
-                 onerror="this.onerror=null; this.parentElement.className='popup-fotos-carrusel sin-fotos'; this.parentElement.innerHTML='<p>사진을 불러올 수 없습니다</p>';">
+                 onload="if(this.naturalWidth===100 && this.naturalHeight===100){ this.parentElement.className='popup-fotos-carrusel sin-fotos'; this.parentElement.innerHTML='<p>${t('photoError')}</p>'; }"
+                 onerror="this.onerror=null; this.parentElement.className='popup-fotos-carrusel sin-fotos'; this.parentElement.innerHTML='<p>${t('photoError')}</p>';">
             ${mostrarFlechas ? '<button type="button" class="popup-flecha popup-flecha-next" aria-label="Foto siguiente">&#8250;</button>' : ''}
             ${fotos.length > 1 ? `<div class="popup-dots">${dotsHtml}</div>` : ''}
         </div>

@@ -3,7 +3,7 @@
 // ==========================================
 
 import { mapa } from './map.js?v=49';
-import { hidePanel, seleccionarNegocio } from './panel.js?v=49';
+import { hidePanel, seleccionarNegocio, nombreTraducido } from './panel.js?v=49';
 
 export const indicesPlatos = {
     '짜장면': ['harimgak', 'bongnaesung', 'songrim', 'goguinara', 'biwon'],
@@ -74,9 +74,10 @@ export function actualizarFiltrado(state, actualizarTodosLosMarcadoresFn) {
             const coincideCategoria = (sel === 'todos' || categoriaNegocio === sel);
 
             const nombreLimpio = negocio.nombre.toLowerCase();
-            let coincideTexto = nombreLimpio.includes(queryLimpia);
+            const nombreEsLimpio = (negocio.nombre_es || '').toLowerCase();
+            let coincideTexto = nombreLimpio.includes(queryLimpia) || nombreEsLimpio.includes(queryLimpia);
             if (!coincideTexto && negociosPorPlato.length > 0) {
-                coincideTexto = negociosPorPlato.some(target => nombreLimpio.includes(target));
+                coincideTexto = negociosPorPlato.some(target => nombreLimpio.includes(target) || nombreEsLimpio.includes(target));
             }
 
             if (coincideCategoria && (queryLimpia === '' || coincideTexto)) {
@@ -95,7 +96,7 @@ export function actualizarFiltrado(state, actualizarTodosLosMarcadoresFn) {
 
                 item.innerHTML = `
                     <div class="negocio-header">
-                        <span class="negocio-nombre">${negocio.indice}. ${negocio.nombre}</span>
+                        <span class="negocio-nombre">${negocio.indice}. ${nombreTraducido(negocio)}</span>
                         ${califHtml}
                     </div>
                     ${dirHtml}

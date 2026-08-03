@@ -11,6 +11,7 @@
         "detalles_tel_1": "(Tel) 55 5207 8915",
         "detalles_tel_2": "(Cel) 55 3403 4559",
         "detalles": "법률, 회계 및 조세",
+        "detalles_es": "Legal, contabilidad e impuestos",
         "calificacion": 4.7,
         "fotos": [
             "AWCwydgsoxCP1Yax1HF0tbbbmlPzkuCuE0YS_6xVNL_LYOooOQ9j0EkEpsPdQQrd9vlJTP11_1hEKb1YoCrgRpmnwUQk_5An7UJRAdadAQeLIrbiE1SOavNbncxcD1z9JYPgJ-CB5bGR3F0fYvkWRoNxCn1XEsyiww9hbbGU8KvmAyULH7J0J-p55-iisp1_tOgxO6XcY5Wo_9FuNc_TBPou5_Plu2E6z-5HfoNF0R1qUq2NM5EbTeLDEjGYcr4XseqNjmhz282dI8byaZqIlYQ4MZmQEY-Zw1su6LVc0cZr6n3cbq-LNNr8bQppHehVgMhRLtKoM0xC5oNeG48e_idZyuNXIp6sPv6Mfr2umtb_PzV2hAsnxGI3YKE_M2r6zQcGj2A7-rmSzBZahj1C8rqTjGCoeAFZxpzgkMbjRV_syJud_g",
@@ -1016,6 +1017,7 @@
     {
         "id_manual": "arte-01",
         "nombre": "미술 학원",
+        "nombre_es": "Academia de Arte",
         "categoria": "otros",
         "coordenadas": [
             19.423890060332415,
@@ -1023,12 +1025,15 @@
         ],
         "direccion": "Londres 190, Juárez, Cuauhtémoc, 06600 Col. Juárez, CDMX",
         "detalles_tel_1": "유치부 | 초등부 : (Tel) 55 5208 8620, (Cel) 55 1070 3309",
+        "detalles_tel_1_es": "Preescolar | Primaria: (Tel) 55 5208 8620, (Cel) 55 1070 3309",
         "detalles_tel_2": "중등부 | 대학교 입시 준비 : (Cel) 55 5207 0026",
+        "detalles_tel_2_es": "Secundaria | Preparación universitaria: (Cel) 55 5207 0026",
         "fotos": []
     },
     {
         "id_google": "ChIJT33jtEn_0YURq0y7bFuXG70",
         "nombre": "우리식품 멕시코 시티 super URI",
+        "nombre_es": "Super URI - Alimentos Coreanos",
         "categoria": "tienda",
         "coordenadas": [
             19.4227996,
@@ -1047,6 +1052,7 @@
     {
         "id_google": "ChIJz6OlO0r_0YURMf0SyrQ82Xw",
         "nombre": "코트라 멕시코 시티",
+        "nombre_es": "KOTRA Ciudad de México",
         "categoria": "otros",
         "coordenadas": [
             19.42914392873236,
@@ -1063,6 +1069,7 @@
     {
         "id_google": "ChIJdfSS65IB0oURPZdWFjhzDmM",
         "nombre": "한국 대사관",
+        "nombre_es": "Embajada de Corea",
         "categoria": "otros",
         "coordenadas": [
             19.416082857317985,
@@ -1082,6 +1089,7 @@
     {
         "id_google": "ChIJf-1CWAAC0oUR3P4qGsmShWQ",
         "nombre": "한국 문학원",
+        "nombre_es": "Centro Cultural Coreano",
         "categoria": "otros",
         "coordenadas": [
             19.433611209802024,

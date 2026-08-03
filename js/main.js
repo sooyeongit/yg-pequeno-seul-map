@@ -6,6 +6,7 @@ import { mapa } from './map.js?v=49';
 import { actualizarTodosLosMarcadores } from './markers.js?v=49';
 import { seleccionarNegocio, cerrarPanelYRegresar, deseleccionarNegocio } from './panel.js?v=49';
 import { filtrarCategoria, filtrarPorBusqueda } from './filters.js?v=49';
+import { setLanguage, applyStaticTranslations, setOnLanguageChange, currentLang } from './i18n.js?v=49';
 
 // Estado global encapsulado
 export const state = {
@@ -19,6 +20,17 @@ export const state = {
 export function actualizarTodos() {
     actualizarTodosLosMarcadores(state.arrayMarcadoresGlobal, state.negocioActivo, state.categoriaActiva);
 }
+
+// Callback que se ejecuta al cambiar idioma: re-renderiza filtrado y panel
+setOnLanguageChange(() => {
+    // Re-renderizar la lista de negocios con el nuevo idioma
+    filtrarCategoria(state.categoriaActiva, state, actualizarTodos);
+
+    // Si hay un negocio seleccionado, re-renderizar su panel de detalle
+    if (state.negocioActivo) {
+        seleccionarNegocio(state.negocioActivo, state, actualizarTodos);
+    }
+});
 
 async function cargarNegocios() {
     try {
@@ -94,6 +106,9 @@ mapa.on('zoomend moveend', () => {
 
 // Eventos de búsqueda e interfaz
 document.addEventListener('DOMContentLoaded', () => {
+    // Aplicar traducciones estáticas al iniciar
+    applyStaticTranslations();
+
     cargarNegocios();
 
     const buscador = document.getElementById('buscadorNegocios');
@@ -110,6 +125,13 @@ document.addEventListener('DOMContentLoaded', () => {
             if (cat) {
                 filtrarCategoria(cat, state, actualizarTodos);
             }
+        });
+    });
+
+    // Switcher de idioma
+    document.querySelectorAll('.lang-tab').forEach(btn => {
+        btn.addEventListener('click', () => {
+            setLanguage(btn.dataset.lang);
         });
     });
 });

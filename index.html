@@ -11,22 +11,32 @@
         href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Poppins:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <link rel="stylesheet" href="style.css?v=115">
-    <link rel="stylesheet" href="overlay.css?v=115">
+    <link rel="stylesheet" href="style.css?v=165">
+    <link rel="stylesheet" href="overlay.css?v=118">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fjalla+One&display=swap" rel="stylesheet">
 </head>
 
 <body>
     <div id="app-container">
         <div id="mapa"></div>
 
+        <!-- Switcher de idioma — pestaña lateral -->
+        <div class="lang-switcher">
+            <button class="lang-tab active" data-lang="ko">한</button>
+            <button class="lang-tab" data-lang="es">ES</button>
+        </div>
+
         <aside id="panelFiltros" class="panel-filtros">
             <div class="header-container">
                 <div class="titulo-sitio">
                     <img src="icons/sungnyemun.png" class="logo-seoul" alt="Logo Seoul">
-                    <span class="titulo-ko">작은 서울</span>
+                    <span class="titulo-ko" data-i18n="siteTitle">작은 서울</span>
                     <div class="info-tooltip-wrapper">
                         <span class="info-icon" aria-label="Información">i</span>
-                        <div class="info-tooltip-text">이 지도는 2026년 7월 19일 기준 등록된 기존 업체를 바탕으로 작성되었습니다.</div>
+                        <div class="info-tooltip-text" data-i18n="infoTooltip">이 지도는 2026년 7월 19일 기준 등록된 기존 업체를 바탕으로
+                            작성되었습니다.</div>
                     </div>
                 </div>
                 <a href="https://ygconsulting.net/HomeKo2" target="_blank">
@@ -34,14 +44,16 @@
                 </a>
             </div>
             <div class="buscador-container">
-                <input type="text" id="buscadorNegocios" placeholder="검색..." oninput="filtrarPorBusqueda(this.value)">
+                <input type="text" id="buscadorNegocios" placeholder="검색..." data-i18n-placeholder="searchPlaceholder"
+                    oninput="filtrarPorBusqueda(this.value)">
             </div>
             <ul class="lista-filtros">
-                <li onclick="filtrarCategoria('todos')" class="filtro-todos">전체 보기</li>
-                <li onclick="filtrarCategoria('yg')" class="filtro-yg">YG 컨설팅</li>
-                <li onclick="filtrarCategoria('restaurante')" class="filtro-restaurante">음식점</li>
-                <li onclick="filtrarCategoria('tienda')" class="filtro-tienda">식품점</li>
-                <li onclick="filtrarCategoria('otros')" class="filtro-otros">기타</li>
+                <li onclick="filtrarCategoria('todos')" class="filtro-todos" data-i18n="filterAll">전체 보기</li>
+                <li onclick="filtrarCategoria('yg')" class="filtro-yg" data-i18n="filterYg">YG 컨설팅</li>
+                <li onclick="filtrarCategoria('restaurante')" class="filtro-restaurante" data-i18n="filterRestaurant">
+                    음식점</li>
+                <li onclick="filtrarCategoria('tienda')" class="filtro-tienda" data-i18n="filterStore">식품점</li>
+                <li onclick="filtrarCategoria('otros')" class="filtro-otros" data-i18n="filterOther">기타</li>
             </ul>
             <div id="listaNegocios" class="lista-negocios"></div>
             <aside id="panelNegocios" class="panel-negocios" aria-label="Detalle de negocio" aria-hidden="true"></aside>

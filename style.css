@@ -6,6 +6,7 @@
     font-display: swap;
 }
 
+
 :root {
     --rgb-yg: 252, 209, 22;
     --rgb-restaurante: 0, 194, 178;
@@ -43,19 +44,76 @@ body {
     height: 100%;
 }
 
+/* ==========================================
+/* SWITCHER DE IDIOMA — PESTAÑA LATERAL
+/* Solo muestra el idioma activo; al hover se expande para revelar ambos.
+/* ========================================== */
+.lang-switcher {
+    position: absolute;
+    right: calc(clamp(320px, 25%, 420px) + 20px);
+    top: 35px;
+    z-index: 1001;
+    display: flex;
+    flex-direction: row;
+    overflow: hidden;
+    border-radius: 12px 0 0 12px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+    width: 38px;
+    transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.lang-switcher:hover {
+    width: 76px;
+}
+
+.lang-tab {
+    width: 38px;
+    height: 38px;
+    min-width: 38px;
+    border: none;
+    background: #ffffff;
+    cursor: pointer;
+    font-family: 'Poppins', 'Noto Sans KR', sans-serif;
+    font-weight: 700;
+    font-size: 0.82rem;
+    color: #999;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    outline: none;
+}
+
+.lang-tab:hover {
+    background: #f5f5f5;
+    color: #333;
+}
+
+.lang-tab.active {
+    background: #222222;
+    color: #ffffff;
+    order: -1;
+}
+
 /* ESTE ES EL NUEVO PANEL FIJO (ÍNDICE) */
 .panel-filtros {
     position: absolute;
     right: 20px;
     top: 20px;
     bottom: 20px;
-    width: 25%;
-    max-width: 420px;
+    width: clamp(320px, 25%, 420px);
     max-height: calc(100dvh - 40px);
     box-sizing: border-box;
-    background: #ffffff;
+
+    background-image: linear-gradient(315deg, #c4cfee 10%, #e9f5ef 90%);
+
+    /* 2. Efecto de desenfoque al contenido que esté detrás */
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+
     border-radius: 16px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
     display: flex;
     flex-direction: column;
     overflow-y: auto;
@@ -87,41 +145,40 @@ body {
 .lista-filtros li {
     font-family: 'Poppins', 'Noto Sans KR', sans-serif;
     padding: 8px 10px;
-    /* más pequeño */
     cursor: pointer;
     border-radius: 20px;
     font-weight: bold;
     font-size: 0.86rem;
-    /* más pequeño */
     transition: all 0.2s ease-in-out;
+    border: 1px solid rgba(195, 234, 220, 0.807);
     border-left: none;
-    background: rgb(224, 236, 240);
+    background: rgb(230, 241, 245);
     color: #000000;
     box-sizing: border-box;
     display: flex;
     align-items: center;
     justify-content: flex-start;
     box-shadow: rgba(11, 113, 76, 0.2) 0px 3px 0px 0px;
+    min-width: 0;
+}
+
+/* Texto más largo en español: reducir tamaño para que quepa */
+html[lang='es'] .lista-filtros li {
+    font-size: 0.78rem;
 }
 
 .lista-filtros li:hover {
-    filter: brightness(0.95);
+    box-shadow: none;
     transform: translateY(2px);
-    /* Pequeña animación hacia arriba */
 }
 
 /* Sombras y estilo de resalte para el botón activo/seleccionado */
 .lista-filtros li.activo {
     box-shadow: none;
     transform: translateY(1.5px);
-    filter: brightness(1.02);
+    border: none;
 }
 
-
-
-.filtro-todos.activo {
-    border-color: rgb(224, 236, 240);
-}
 
 /* Colores específicos para cada categoría (se aplican cuando están activos) */
 .filtro-todos {
@@ -130,7 +187,9 @@ body {
 }
 
 .filtro-todos.activo {
-    background: #ffffff;
+    background: rgb(255, 255, 255);
+
+    box-shadow: inset 0px 3px 0px 0px rgba(11, 113, 76, 0.28) !important;
 }
 
 .filtro-yg.activo {
@@ -243,9 +302,9 @@ body {
 
 .negocio-item {
     padding: 12px;
-    border-radius: 8px;
-    background: #ffffff;
-    border: 1px solid rgba(12, 124, 82, 0.2);
+    border-radius: 13px;
+    background: rgb(252, 253, 255);
+    border: 1px solid rgb(203, 213, 223);
     cursor: pointer;
     transition: all 0.2s ease-in-out;
     border-left: 5px solid transparent;
@@ -310,29 +369,7 @@ body {
     text-overflow: ellipsis;
 }
 
-/* Responsividad para móviles (El panel fijo se va abajo) */
-@media (max-width: 800px) {
-    #app-container {
-        display: block;
-    }
 
-    #mapa {
-        height: 100vh;
-        width: 100vw;
-    }
-
-    .panel-filtros {
-        position: absolute;
-        top: auto;
-        bottom: 20px;
-        left: 20px;
-        right: 20px;
-        width: calc(100% - 40px);
-        max-width: none;
-        height: 40vh;
-        max-height: 40vh;
-    }
-}
 
 /* ==========================================
 /* MARCADOR NUMERADO
@@ -370,7 +407,6 @@ body {
     background-color: #000000;
     transform: scale(1.25);
     box-shadow: 0 0 0 3px #000000, 0 4px 10px rgba(0, 0, 0, 0.4) !important;
-    /* font-weight: 600; */
     border: none !important;
 }
 
@@ -418,37 +454,55 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    /* Elementos separados en cada esquina */
+    gap: 6px;
     margin-bottom: 0px;
     padding-bottom: 10px;
+    min-width: 0;
+    flex-wrap: nowrap;
 }
 
 .logo-yg {
-    height: 38px;
+    height: clamp(28px, 4vw, 36px);
     width: auto;
     object-fit: contain;
+    flex-shrink: 0;
 }
 
 .titulo-sitio {
     display: flex;
     align-items: center;
-    width: fit-content;
-    /* wrap al texto */
+    gap: 4px;
+    min-width: 0;
+    flex: 1;
+    max-width: calc(100% - 60px);
 }
 
 .logo-seoul {
-    height: 38px;
+    height: clamp(28px, 4vw, 36px);
     width: auto;
     object-fit: contain;
-    padding-right: 8px;
+    padding-right: 2px;
+    flex-shrink: 0;
 }
 
 .titulo-ko {
-    font-family: 'Poppins', 'memomentkkukkuk', sans-serif;
+    font-family: 'memomentkkukkuk', 'Poppins', sans-serif;
     font-weight: 500;
     font-size: clamp(1.6rem, 6vw, 3rem);
     color: #000;
-    line-height: 1;
+    line-height: 1.1;
+    white-space: nowrap;
+}
+
+/* Fuente Fjalla One y ajustes para el título en español */
+html[lang='es'] .titulo-ko {
+    font-family: 'Fjalla One', sans-serif;
+    font-size: clamp(1.2rem, 3.2vw, 2.0rem);
+    line-height: 1.0;
+    white-space: normal;
+    word-break: normal;
+    overflow-wrap: break-word;
+    min-width: 0;
 }
 
 /* Estilos para el icono de info y tooltip */
@@ -457,7 +511,8 @@ body {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    margin-left: 8px;
+    margin-left: 4px;
+    flex-shrink: 0;
     vertical-align: bottom;
     z-index: 1010;
 }
@@ -469,7 +524,7 @@ body {
     width: 18px;
     height: 18px;
     border-radius: 50%;
-    background-color: rgb(224, 236, 240);
+    background-color: rgb(207, 218, 222);
     color: #555555;
     font-size: 0.7rem;
     font-family: 'Poppins', sans-serif;
@@ -635,10 +690,14 @@ body {
 /* ==========================================
 /* RESPONSIVE MEDIA QUERIES (TABLET & MOBILE)
 /* ========================================== */
-@media (max-width: 1024px) and (min-width: 801px) {
+@media (max-width: 1024px) and (min-width: 645.01px) {
     .panel-filtros {
-        width: 34%;
-        max-width: 360px;
+        width: clamp(300px, 34%, 380px);
+    }
+
+    .lang-switcher {
+        right: calc(clamp(300px, 34%, 380px) + 20px);
+        top: 35px;
     }
 
     .titulo-ko {
@@ -655,6 +714,22 @@ body {
         height: 100vh;
         height: 100dvh;
         width: 100vw;
+    }
+
+    .lang-switcher {
+        position: absolute;
+        right: 12px;
+        top: auto;
+        bottom: calc(38vh + 24px);
+        border-radius: 12px;
+        transition: bottom 0.3s cubic-bezier(0.4, 0, 0.2, 1), width 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 1002;
+    }
+
+    .lang-switcher.detalle-abierto,
+    #panelFiltros.detalle-abierto~.lang-switcher,
+    #app-container:has(.detalle-abierto) .lang-switcher {
+        bottom: calc(48vh + 24px);
     }
 
     .panel-filtros {
@@ -702,6 +777,13 @@ body {
 @media (max-width: 900px) and (orientation: landscape) {
     #app-container {
         display: flex;
+    }
+
+    .lang-switcher {
+        right: calc(40% + 12px);
+        top: 35px;
+        bottom: auto;
+        border-radius: 12px 0 0 12px;
     }
 
     .panel-filtros {

@@ -7,6 +7,7 @@
 // cuando el negocio está seleccionado.
 
 import { mapa } from './map.js?v=49';
+import { nombreTraducido } from './panel.js?v=49';
 
 // Metros por grado de latitud (aprox. constante en toda la Tierra)
 const METROS_POR_GRADO_LAT = 111320;
@@ -92,7 +93,7 @@ export function actualizarIconoMarcador(negocio, negocioActivo, categoriaActiva)
     if (!negocio._marcador) return;
 
     negocio._marcador.unbindTooltip();
-    negocio._marcador.bindTooltip(negocio.nombre, {
+    negocio._marcador.bindTooltip(nombreTraducido(negocio), {
         permanent: false,
         direction: 'top',
         className: 'tooltip-negocio',

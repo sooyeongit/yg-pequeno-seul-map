@@ -4,13 +4,18 @@
 
 import { mapa, vistaInicial, limitesZonaRosa } from './map.js?v=49';
 import { mostrarBurbujaFotos, ocultarBurbujaFotos } from './photos.js?v=49';
+import { t, traducirCategoria, campoTraducido, currentLang } from './i18n.js?v=49';
 
-export const traduccionesCategorias = {
-    'restaurante': '음식점',
-    'tienda': '식품점',
-    'otros': '기타',
-    'yg': 'YG 컨설팅'
-};
+/**
+ * Obtiene el nombre del negocio en el idioma activo.
+ * Si existe nombre_es y el idioma es español, lo usa.
+ */
+export function nombreTraducido(negocio) {
+    if (currentLang === 'es' && negocio.nombre_es) {
+        return negocio.nombre_es;
+    }
+    return negocio.nombre;
+}
 
 export function centrarVistaNegocio(negocio) {
     const zoom = 18;
@@ -52,6 +57,10 @@ export function hidePanel(panel) {
     if (panelFiltros) {
         panelFiltros.classList.remove('detalle-abierto');
     }
+    const langSwitcher = document.querySelector('.lang-switcher');
+    if (langSwitcher) {
+        langSwitcher.classList.remove('detalle-abierto');
+    }
 }
 
 export function seleccionarNegocio(negocio, state, actualizarTodosLosMarcadoresFn) {
@@ -61,9 +70,13 @@ export function seleccionarNegocio(negocio, state, actualizarTodosLosMarcadoresF
     state.negocioActivo = negocio;
     const panel = document.getElementById('panelNegocios');
     const panelFiltros = document.getElementById('panelFiltros');
+    const langSwitcher = document.querySelector('.lang-switcher');
 
     if (panelFiltros) {
         panelFiltros.classList.add('detalle-abierto');
+    }
+    if (langSwitcher) {
+        langSwitcher.classList.add('detalle-abierto');
     }
 
     actualizarTodosLosMarcadoresFn();
@@ -74,13 +87,17 @@ export function seleccionarNegocio(negocio, state, actualizarTodosLosMarcadoresF
     panel.classList.add('visible');
     panel.removeAttribute('aria-hidden');
 
-    const htmlCalificacion = negocio.calificacion ? `<b>평점:</b> ⭐ ${negocio.calificacion}` : '';
-    const htmlDetalles = negocio.detalles ? `<b>주요업무:</b> ${negocio.detalles}` : '';
+    const nombre = nombreTraducido(negocio);
+    const htmlCalificacion = negocio.calificacion ? `<b>${t('labelRating')}</b> ⭐ ${negocio.calificacion}` : '';
+    const detallesTexto = campoTraducido(negocio, 'detalles');
+    const htmlDetalles = detallesTexto ? `<b>${t('labelDetails')}</b> ${detallesTexto}` : '';
 
     let htmlTelefonos = '';
     if (negocio.detalles_tel_1 || negocio.detalles_tel_2) {
-        const t1 = negocio.detalles_tel_1 ? `<div><b>연락처 1:</b> ${negocio.detalles_tel_1}</div>` : '';
-        const t2 = negocio.detalles_tel_2 ? `<div><b>연락처 2:</b> ${negocio.detalles_tel_2}</div>` : '';
+        const tel1Texto = campoTraducido(negocio, 'detalles_tel_1');
+        const tel2Texto = campoTraducido(negocio, 'detalles_tel_2');
+        const t1 = tel1Texto ? `<div><b>${t('labelContact1')}</b> ${tel1Texto}</div>` : '';
+        const t2 = tel2Texto ? `<div><b>${t('labelContact2')}</b> ${tel2Texto}</div>` : '';
         htmlTelefonos = `${t1}${t2}`;
     }
 
@@ -88,7 +105,7 @@ export function seleccionarNegocio(negocio, state, actualizarTodosLosMarcadoresF
         ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(negocio.nombre)}&query_place_id=${negocio.id_google}`
         : `https://www.google.com/maps/search/?api=1&query=${negocio.coordenadas[0]},${negocio.coordenadas[1]}`;
 
-    const categoriaTraducida = traduccionesCategorias[negocio.categoria ? negocio.categoria.toLowerCase() : ''] || negocio.categoria || '기타';
+    const categoriaTraducida = traducirCategoria(negocio.categoria);
 
     const catLimpia = negocio.categoria ? negocio.categoria.toLowerCase() : 'otros';
     const catClase = catLimpia === 'otro' ? 'otros' : catLimpia;
@@ -96,7 +113,7 @@ export function seleccionarNegocio(negocio, state, actualizarTodosLosMarcadoresF
     panel.innerHTML = `
         <div id="detalleNegocio" class="detalle-negocio detalle-${catClase}" aria-live="polite">
             <div class="detalle-header-banner">
-                <span class="detalle-nombre">${negocio.indice}. ${negocio.nombre}</span>
+                <span class="detalle-nombre">${negocio.indice}. ${nombre}</span>
                 <button class="close-btn" aria-label="Cerrar panel">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                         <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -105,14 +122,14 @@ export function seleccionarNegocio(negocio, state, actualizarTodosLosMarcadoresF
                 </button>
             </div>
             <div class="detalle-body">
-                <p><b>업종:</b> ${categoriaTraducida}</p>
+                <p><b>${t('labelCategory')}</b> ${categoriaTraducida}</p>
                 ${htmlCalificacion ? `<p>${htmlCalificacion}</p>` : ''}
                 ${htmlDetalles ? `<p>${htmlDetalles}</p>` : ''}
                 ${htmlTelefonos ? `<p>${htmlTelefonos}</p>` : ''}
-                <p><small><b>주소:</b> ${negocio.direccion}</small></p>
+                <p><small><b>${t('labelAddress')}</b> ${negocio.direccion}</small></p>
                 <a href="${gmapsUrl}" target="_blank" class="gmaps-btn">
                     <img src="icons/google-maps.svg" alt="Google Maps" class="gmaps-icon" style="width: 16px; height: 16px; margin-right: 8px;">
-                    <span>구글 지도에서 보기</span>
+                    <span>${t('labelGmaps')}</span>
                 </a>
             </div>
         </div>
